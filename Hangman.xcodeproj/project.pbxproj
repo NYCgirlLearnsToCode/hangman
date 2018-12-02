@@ -7,21 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		291BEBBCF5040945F2DB9EDD /* Pods_Hangman.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E04864B551838A4FB8C7BFBC /* Pods_Hangman.framework */; };
+		D69FF03F21B46271003EB84A /* WordsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FF03E21B46271003EB84A /* WordsClient.swift */; };
 		D6E0337421B3360F0096A2DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E0337321B3360F0096A2DD /* AppDelegate.swift */; };
-		D6E0337621B3360F0096A2DD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E0337521B3360F0096A2DD /* ViewController.swift */; };
-		D6E0337921B3360F0096A2DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6E0337721B3360F0096A2DD /* Main.storyboard */; };
+		D6E0337621B3360F0096A2DD /* HangmanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E0337521B3360F0096A2DD /* HangmanController.swift */; };
 		D6E0337B21B336120096A2DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6E0337A21B336120096A2DD /* Assets.xcassets */; };
-		D6E0337E21B336120096A2DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6E0337C21B336120096A2DD /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F51D88DF4E1B43A3E5404F9 /* Pods-Hangman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hangman.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hangman/Pods-Hangman.release.xcconfig"; sourceTree = "<group>"; };
+		D69FF03E21B46271003EB84A /* WordsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsClient.swift; sourceTree = "<group>"; };
 		D6E0337021B3360F0096A2DD /* Hangman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hangman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E0337321B3360F0096A2DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D6E0337521B3360F0096A2DD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D6E0337821B3360F0096A2DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D6E0337521B3360F0096A2DD /* HangmanController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangmanController.swift; sourceTree = "<group>"; };
 		D6E0337A21B336120096A2DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D6E0337D21B336120096A2DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D6E0337F21B336120096A2DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE86218D5DFEBCB7417A1F02 /* Pods-Hangman.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hangman.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hangman/Pods-Hangman.debug.xcconfig"; sourceTree = "<group>"; };
+		E04864B551838A4FB8C7BFBC /* Pods_Hangman.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hangman.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +31,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				291BEBBCF5040945F2DB9EDD /* Pods_Hangman.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E8B0A568A6AC05B1A4C57C1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DE86218D5DFEBCB7417A1F02 /* Pods-Hangman.debug.xcconfig */,
+				1F51D88DF4E1B43A3E5404F9 /* Pods-Hangman.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B5FB5759C3E02B5999BD77B0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E04864B551838A4FB8C7BFBC /* Pods_Hangman.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D6E0336721B3360F0096A2DD = {
 			isa = PBXGroup;
 			children = (
 				D6E0337221B3360F0096A2DD /* Hangman */,
 				D6E0337121B3360F0096A2DD /* Products */,
+				0E8B0A568A6AC05B1A4C57C1 /* Pods */,
+				B5FB5759C3E02B5999BD77B0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,10 +77,9 @@
 			isa = PBXGroup;
 			children = (
 				D6E0337321B3360F0096A2DD /* AppDelegate.swift */,
-				D6E0337521B3360F0096A2DD /* ViewController.swift */,
-				D6E0337721B3360F0096A2DD /* Main.storyboard */,
+				D6E0337521B3360F0096A2DD /* HangmanController.swift */,
+				D69FF03E21B46271003EB84A /* WordsClient.swift */,
 				D6E0337A21B336120096A2DD /* Assets.xcassets */,
-				D6E0337C21B336120096A2DD /* LaunchScreen.storyboard */,
 				D6E0337F21B336120096A2DD /* Info.plist */,
 			);
 			path = Hangman;
@@ -71,9 +92,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D6E0338221B336120096A2DD /* Build configuration list for PBXNativeTarget "Hangman" */;
 			buildPhases = (
+				563F6A80A41A5EB9019B58F2 /* [CP] Check Pods Manifest.lock */,
 				D6E0336C21B3360F0096A2DD /* Sources */,
 				D6E0336D21B3360F0096A2DD /* Frameworks */,
 				D6E0336E21B3360F0096A2DD /* Resources */,
+				78EFCCCEB7E0DB38A7ED5720 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -122,44 +145,69 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6E0337E21B336120096A2DD /* LaunchScreen.storyboard in Resources */,
 				D6E0337B21B336120096A2DD /* Assets.xcassets in Resources */,
-				D6E0337921B3360F0096A2DD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		563F6A80A41A5EB9019B58F2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Hangman-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		78EFCCCEB7E0DB38A7ED5720 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Hangman/Pods-Hangman-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Hangman/Pods-Hangman-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D6E0336C21B3360F0096A2DD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6E0337621B3360F0096A2DD /* ViewController.swift in Sources */,
+				D69FF03F21B46271003EB84A /* WordsClient.swift in Sources */,
+				D6E0337621B3360F0096A2DD /* HangmanController.swift in Sources */,
 				D6E0337421B3360F0096A2DD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		D6E0337721B3360F0096A2DD /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D6E0337821B3360F0096A2DD /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		D6E0337C21B336120096A2DD /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D6E0337D21B336120096A2DD /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		D6E0338021B336120096A2DD /* Debug */ = {
@@ -280,16 +328,17 @@
 		};
 		D6E0338321B336120096A2DD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE86218D5DFEBCB7417A1F02 /* Pods-Hangman.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6KNQM8WXR8;
+				DEVELOPMENT_TEAM = J4UC96YYKT;
 				INFOPLIST_FILE = Hangman/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = LisaJ.Hangman;
+				PRODUCT_BUNDLE_IDENTIFIER = LisaJ.hangmanProj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -298,16 +347,17 @@
 		};
 		D6E0338421B336120096A2DD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F51D88DF4E1B43A3E5404F9 /* Pods-Hangman.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6KNQM8WXR8;
+				DEVELOPMENT_TEAM = J4UC96YYKT;
 				INFOPLIST_FILE = Hangman/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = LisaJ.Hangman;
+				PRODUCT_BUNDLE_IDENTIFIER = LisaJ.hangmanProj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
