@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import RxSwift
 
 enum AppErrors: Error {
 	case noData
@@ -31,16 +32,47 @@ struct WordsClient {
 		var regString = ""
 		let urlStr = URL(string: "http://app.linkedin-reach.io/words")
 		let urlRequest = URLRequest(url: urlStr!)
-		Alamofire.request(urlRequest).response(completionHandler: { (response) in
-			if response.error != nil {
-				print("error",response.error)
-			} else {
-				guard let data = response.data else { return }
-				let htmlContent = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+//		Alamofire.request(urlRequest).response(completionHandler: { (response) in
+//			if response.error != nil {
+//				print("error",response.error)
+//			} else {
+//				guard let data = response.data else { return }
+//				let htmlContent = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+//
+//				regString = String(htmlContent!)
+//				success(regString)
+//			}
+//		})
+	}
+	
+	func rxRequest() -> Observable<String> {
+		return Observable.create { observer in
+			let urlStr = URL(string: "http://app.linkedin-reach.io/words")
+			let urlRequest = URLRequest(url: urlStr!)
+			let request = Alamofire.request(urlRequest).responseData(completionHandler: { response in
+				defer { observer.onCompleted() }
+				guard let statusCode = response.response?.statusCode,
+					(200...299).contains(statusCode)
+					else {
+						print("error in response")
+						return
+				}
 				
-				regString = String(htmlContent!)
-				success(regString)
+				if let result = response.result.value {
+					guard let data = response.data else { return }
+					let htmlContent = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+					
+					let regString = String(htmlContent!)
+					observer.onNext(regString)
+//					print("result", result)
+				} else {
+					print("response error")
+				}
 			}
-		})
+		)
+			return Disposables.create {
+				request.cancel()
+			}
+		}
 	}
 }
