@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		291BEBBCF5040945F2DB9EDD /* Pods_Hangman.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E04864B551838A4FB8C7BFBC /* Pods_Hangman.framework */; };
 		D69FF03F21B46271003EB84A /* WordsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FF03E21B46271003EB84A /* WordsClient.swift */; };
-		D69FF04121B4944C003EB84A /* HangmanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FF04021B4944C003EB84A /* HangmanView.swift */; };
+		D69FF04321B49589003EB84A /* HangmanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FF04221B49589003EB84A /* HangmanViewModel.swift */; };
 		D6E0337421B3360F0096A2DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E0337321B3360F0096A2DD /* AppDelegate.swift */; };
 		D6E0337621B3360F0096A2DD /* HangmanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E0337521B3360F0096A2DD /* HangmanController.swift */; };
 		D6E0337B21B336120096A2DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6E0337A21B336120096A2DD /* Assets.xcassets */; };
@@ -18,7 +18,7 @@
 /* Begin PBXFileReference section */
 		1F51D88DF4E1B43A3E5404F9 /* Pods-Hangman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hangman.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hangman/Pods-Hangman.release.xcconfig"; sourceTree = "<group>"; };
 		D69FF03E21B46271003EB84A /* WordsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsClient.swift; sourceTree = "<group>"; };
-		D69FF04021B4944C003EB84A /* HangmanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangmanView.swift; sourceTree = "<group>"; };
+		D69FF04221B49589003EB84A /* HangmanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangmanViewModel.swift; sourceTree = "<group>"; };
 		D6E0337021B3360F0096A2DD /* Hangman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hangman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E0337321B3360F0096A2DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D6E0337521B3360F0096A2DD /* HangmanController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangmanController.swift; sourceTree = "<group>"; };
@@ -80,7 +80,7 @@
 			children = (
 				D6E0337321B3360F0096A2DD /* AppDelegate.swift */,
 				D6E0337521B3360F0096A2DD /* HangmanController.swift */,
-				D69FF04021B4944C003EB84A /* HangmanView.swift */,
+				D69FF04221B49589003EB84A /* HangmanViewModel.swift */,
 				D69FF03E21B46271003EB84A /* WordsClient.swift */,
 				D6E0337A21B336120096A2DD /* Assets.xcassets */,
 				D6E0337F21B336120096A2DD /* Info.plist */,
@@ -205,8 +205,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D69FF03F21B46271003EB84A /* WordsClient.swift in Sources */,
-				D69FF04121B4944C003EB84A /* HangmanView.swift in Sources */,
 				D6E0337621B3360F0096A2DD /* HangmanController.swift in Sources */,
+				D69FF04321B49589003EB84A /* HangmanViewModel.swift in Sources */,
 				D6E0337421B3360F0096A2DD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

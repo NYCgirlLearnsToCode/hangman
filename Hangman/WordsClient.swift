@@ -9,20 +9,6 @@
 import Foundation
 import Alamofire
 
-enum AppErrors: Error {
-	case noData
-	case couldNotParseJSON(rawError: Error)
-	case badURL(str: String)
-	case noResponse
-}
-
-struct Words {
-	let words: String
-	init(words: String) {
-		self.words = words
-	}
-}
-
 struct WordsClient {
 	private init() { }
 	static let manager = WordsClient()
@@ -39,6 +25,7 @@ struct WordsClient {
 				let htmlContent = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
 				
 				regString = String(htmlContent!)
+//				print(regString)
 				success(regString)
 			}
 		})
