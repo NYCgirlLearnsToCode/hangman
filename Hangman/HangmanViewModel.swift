@@ -16,20 +16,18 @@ class HangmanViewModel {
 	var drawWordLines: (() -> Void)?
 	var dict = [Character: [Int]]()
 	var textFieldText = ""
-	var numberOfAllowedGuesses = 0
-	var guessesLeft = 0
+	var numberOfAllowedGuesses = 6
+	var guessesLeft = 6
 	var correctGuesses = 0
 	var incorrectGuesses = 0
 	var userHasWon = false
 	var gameOver = false
-	// TODO: - Cache words?
+	
 	// MARK: - functions -
 	func getWords(wordsCompletion: @escaping (_ success: Bool) -> Void) {
 		WordsClient.manager.getWords(success: { [unowned self] in self.words = $0 })
 		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute:  { [unowned self] in
-			print("done getting words")
-			self.wordsIntoArray(completion: {
-				print("finished turning into array from view model", $0)
+			self.wordsIntoArray(completion: { _ in
 				wordsCompletion(true)
 			})
 		})
@@ -40,17 +38,12 @@ class HangmanViewModel {
 		completion(true)
 	}
 	
-	//oncompletion
+	
 	func getRandomWord() {
-		// TODO: make sure words are done downloading
-		let random = Int(arc4random_uniform(162414))
-		print("random#", random)
+		let randomNumber = Int(arc4random_uniform(162414))
+		print("random#", randomNumber)
 		DispatchQueue.main.async { [unowned self] in
-			//self.randomWord = String(self.wordsArr[random])
-			self.randomWord = String(self.wordsArr[85892])
-			self.numberOfAllowedGuesses = self.randomWord.count
-			self.guessesLeft = self.randomWord.count
-			print("random word count ",self.numberOfAllowedGuesses)
+			self.randomWord = String(self.wordsArr[randomNumber])
 			print("randomWord", self.randomWord)
 			self.wordToDict(word: self.randomWord)
 			self.drawWordLines?()
@@ -71,18 +64,21 @@ class HangmanViewModel {
 			dict[thisLetter] = numArr
 			numArr = []
 		}
-		print(dict)
 	}
 	
 	func check(letter: String) -> [Int] {
-		// TODO: Handle wrong guesses
 		guessesLeft = guessesLeft - 1
-		// TODO: - only allow letter input
 		if let arr = dict[Character(letter.lowercased())] {
 			correctGuesses = correctGuesses + 1
-			if correctGuesses == numberOfAllowedGuesses {
+//			if correctGuesses == numberOfAllowedGuesses {
+//				// TODO win without using all guesses
+//				userHasWon = true
+//				print("win!!")
+//			}
+			
+			if correctGuesses == dict.count  {
 				userHasWon = true
-				print("win!!")
+				print("won before max guesses correctGuesses == dict.count",correctGuesses == dict.count)
 			}
 			return arr
 			
@@ -92,7 +88,6 @@ class HangmanViewModel {
 					print("lost!")
 					return []
 				}
-			print("wrong, number of incorrect guesses made", incorrectGuesses)
 			return []
 		}
 	}
