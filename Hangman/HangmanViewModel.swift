@@ -70,13 +70,9 @@ class HangmanViewModel {
 		guessesLeft = guessesLeft - 1
 		if let arr = dict[Character(letter.lowercased())] {
 			correctGuesses = correctGuesses + 1
-//			if correctGuesses == numberOfAllowedGuesses {
-//				// TODO win without using all guesses
-//				userHasWon = true
-//				print("win!!")
-//			}
 			
 			if correctGuesses == dict.count  {
+				// win without using all guesses
 				userHasWon = true
 				print("won before max guesses correctGuesses == dict.count",correctGuesses == dict.count)
 			}

@@ -23,6 +23,7 @@ class HangmanController: UIViewController {
 	private let correctGuessesLabel = UILabel()
 	private let statusLabel = UILabel()
 	private let resetGameButton = UIButton()
+	private let imageView = UIImageView()
 	
 	// MARK: - lifecycle -
 	override func viewDidLoad() {
@@ -100,17 +101,45 @@ class HangmanController: UIViewController {
 // MARK: - viewCustomizer -
 extension HangmanController {
 	private func addSubviews() {
+		addNewWordButton()
+		addImageView()
 		addGuessesLeftLabel()
 		addIncorrectGuessesLeftLabel()
 		addCorrectGuessesLabel()
 		addStatusLabel()
-		addNewWordButton()
 		addResetGameButton()
 		addStackview()
 		addLinesStackview()
 		addTextField()
 		addGuessButton()
 	}
+	
+	private func addNewWordButton() {
+		view.addSubview(newWordButton)
+		newWordButton.backgroundColor = .gray
+		newWordButton.isEnabled = false
+		
+		newWordButton.snp.makeConstraints { make in
+			make.top.trailing.equalToSuperview().inset(50.0)
+			make.width.equalTo(100.0)
+			make.height.equalTo(25.0)
+		}
+	}
+	
+	private func addImageView() {
+		view.addSubview(imageView)
+		imageView.backgroundColor = .black
+		imageView.contentMode = .scaleAspectFit
+		imageView.image = UIImage(named: "start")
+		
+		imageView.snp.makeConstraints { make in
+			make.top.equalTo(newWordButton.snp.bottom).offset(20.0)
+			make.width.equalTo(110.0)
+			make.height.equalTo(200.0)
+			make.trailing.equalToSuperview().inset(30.0)
+		}
+	}
+	
 	private func addGuessesLeftLabel() {
 		view.addSubview(guessesLeftLabel)
 		
@@ -145,18 +174,6 @@ extension HangmanController {
 			make.centerX.equalToSuperview()
 			make.top.equalTo(correctGuessesLabel.snp.bottom).offset(10.0)
 			make.width.equalTo(100.0)
-		}
-	}
-	
-	private func addNewWordButton() {
-		view.addSubview(newWordButton)
-		newWordButton.backgroundColor = .gray
-		newWordButton.isEnabled = false
-		
-		newWordButton.snp.makeConstraints { make in
-			make.top.trailing.equalToSuperview().inset(50.0)
-			make.width.equalTo(100.0)
-			make.height.equalTo(25.0)
 		}
 	}
 	
@@ -260,6 +277,16 @@ extension HangmanController {
 			for index in indexes {
 				stackView.arrangedSubviews[index].backgroundColor = .blue
 			}
+		} else {
+			switch viewModel.incorrectGuesses {
+			case 1: imageView.image = UIImage(named: "one")
+			case 2: imageView.image = UIImage(named: "two")
+			case 3: imageView.image = UIImage(named: "three")
+			case 4: imageView.image = UIImage(named: "four")
+			case 5: imageView.image = UIImage(named: "five")
+			case 6: imageView.image = UIImage(named: "six")
+			default: print("default")
+			}
 		}
 		
 		if viewModel.userHasWon {
@@ -294,6 +321,7 @@ extension HangmanController {
 		clearStackView()
 		resetGameButton.isHidden = true
 		guessesLeftLabel.text = "Guesses Left: \(viewModel.guessesLeft)"
+		imageView.image = UIImage(named: "start")
 	}
 }
 // MARK: - localize -
