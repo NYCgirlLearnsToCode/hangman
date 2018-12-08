@@ -20,11 +20,15 @@ class HangmanController: UIViewController {
 	private let textField = UITextField()
 	private let guessesLeftLabel = UILabel()
 	private let incorrectGuessesLabel = UILabel()
+	private let correctGuessesLabel = UILabel()
+	private let statusLabel = UILabel()
+	private let resetGameButton = UIButton()
 	
 	// MARK: - lifecycle -
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
+		textField.delegate = self
 		getWords()
 		addSubviews()
 		setupBindings()
@@ -33,18 +37,31 @@ class HangmanController: UIViewController {
 	
 	// MARK: - functions -
 	private func getWords() {
-		viewModel.getWords()
+		viewModel.getWords { [unowned self] in
+			print("getting words")
+			if $0 {
+				print("in get words")
+				self.wordsIntoArray()
+			}
+		}
 	}
 	
 	private func wordsIntoArray() {
-		viewModel.wordsIntoArray()
+		viewModel.wordsIntoArray { (success) -> Void in
+			if success {
+				print("finished turning into array from VC", success)
+				newWordButton.backgroundColor = .green
+				newWordButton.isEnabled = true
+			}
+		}
 	}
 	
-	private func reset() {
+	private func disable() {
 		textField.isEnabled = false
 		guessButton.isEnabled = false
 		newWordButton.isEnabled = true
-		newWordButton.setTitle("New Word", for: .normal)
+//		newWordButton.setTitle("New Word", for: .normal)
+		resetGameButton.isHidden = false
 	}
 	
 	private func clearStackView() {
@@ -74,19 +91,21 @@ class HangmanController: UIViewController {
 	
 	private func showWordLines() {
 		print("viewModel.randomWord.count",viewModel.randomWord.count)
-		clearStackView()
 		print("done writing word", viewModel.randomWord)
 		// TODO: - Create a stackview of _ under the letters, unhide letters when correctly guessed using index
+		guessesLeftLabel.text = "Guesses Left: \(viewModel.guessesLeft)"
+		incorrectGuessesLabel.text = "Incorrect Guesses: \(viewModel.incorrectGuesses)"
+		correctGuessesLabel.text = "Correct Guesses: \(viewModel.correctGuesses)"
 		viewModel.randomWord.forEach {
 			let label = UILabel()
-			label.text = "\($0) "
+			label.text = "\($0)"
 			label.textColor = .white
 			//			print("label \($0)")
 			stackView.addArrangedSubview(label)
 		}
 		viewModel.randomWord.forEach { _ in
 			let lineLabel = UILabel()
-			lineLabel.text = "_ "
+			lineLabel.text = "—"
 			linesStackView.addArrangedSubview(lineLabel)
 		}
 	}
@@ -94,21 +113,62 @@ class HangmanController: UIViewController {
 // MARK: - viewCustomizer -
 extension HangmanController {
 	private func addSubviews() {
+		addGuessesLeftLabel()
+		addIncorrectGuessesLeftLabel()
+		addCorrectGuessesLabel()
+		addStatusLabel()
 		addStackview()
 		addLinesStackview()
 		addNewWordButton()
 		addTextField()
 		addGuessButton()
+		addResetGameButton()
+	}
+	private func addGuessesLeftLabel() {
+		view.addSubview(guessesLeftLabel)
+		
+		guessesLeftLabel.snp.makeConstraints { make in
+			make.top.equalToSuperview().inset(150.0)
+			make.leading.trailing.equalToSuperview().inset(20.0)
+		}
+	}
+	
+	private func addIncorrectGuessesLeftLabel() {
+		view.addSubview(incorrectGuessesLabel)
+		
+		incorrectGuessesLabel.snp.makeConstraints { make in
+			make.top.equalTo(guessesLeftLabel.snp.bottom).offset(10.0)
+			make.leading.trailing.equalToSuperview().inset(20.0)
+		}
+	}
+	
+	private func addCorrectGuessesLabel() {
+		view.addSubview(correctGuessesLabel)
+		
+		correctGuessesLabel.snp.makeConstraints { make in
+			make.top.equalTo(incorrectGuessesLabel.snp.bottom).offset(10.0)
+			make.leading.trailing.equalToSuperview().inset(20.0)
+		}
+	}
+	
+	private func addStatusLabel() {
+		view.addSubview(statusLabel)
+		
+		statusLabel.snp.makeConstraints { make in
+			make.centerX.equalToSuperview()
+			make.top.equalTo(correctGuessesLabel.snp.bottom).offset(40.0)
+			make.width.equalTo(100.0)
+		}
 	}
 	
 	private func addStackview() {
 		view.addSubview(stackView)
 		stackView.axis = .horizontal
 		stackView.alignment = .center
-		stackView.spacing = 3.0
+		stackView.spacing = 29.0
 		stackView.snp.makeConstraints { make in
 			make.centerX.centerY.equalToSuperview()
-			make.height.equalTo(100.0)
+			make.height.equalTo(20.0)
 		}
 	}
 	
@@ -116,17 +176,18 @@ extension HangmanController {
 		view.addSubview(linesStackView)
 		linesStackView.axis = .horizontal
 		linesStackView.alignment = .center
-		linesStackView.spacing = 3.0
+		linesStackView.spacing = 20.0
 		linesStackView.snp.makeConstraints { make in
 			make.centerX.equalTo(stackView)
 			make.top.equalTo(stackView.snp.bottom).offset(5.0)
-			make.height.equalTo(100.0)
+			make.height.equalTo(10.0)
 		}
 	}
 	
 	private func addNewWordButton() {
 		view.addSubview(newWordButton)
-		newWordButton.backgroundColor = .blue
+		newWordButton.backgroundColor = .gray
+		newWordButton.isEnabled = false
 		
 		newWordButton.snp.makeConstraints { make in
 			make.top.trailing.equalToSuperview().inset(50.0)
@@ -149,11 +210,25 @@ extension HangmanController {
 	private func addGuessButton() {
 		view.addSubview(guessButton)
 		guessButton.backgroundColor = .blue
+		guessButton.isEnabled = false
 		
 		guessButton.snp.makeConstraints { make in
-			make.leading.equalTo(textField).offset(-100.0)
 			make.width.height.equalTo(70.0)
-			make.top.equalTo(textField)
+			make.centerX.equalTo(stackView)
+			make.top.equalTo(linesStackView.snp.bottom).offset(5.0)
+		}
+	}
+	
+	private func addResetGameButton() {
+		view.addSubview(resetGameButton)
+		resetGameButton.backgroundColor = .blue
+		resetGameButton.isHidden = true
+		
+		resetGameButton.snp.makeConstraints { make in
+			make.top.equalTo(statusLabel.snp.bottom).offset(20.0)
+			make.width.equalTo(100.0)
+			make.height.equalTo(50.0)
+			make.centerX.equalToSuperview()
 		}
 	}
 }
@@ -161,6 +236,7 @@ extension HangmanController {
 	func setupBindings() {
 		setupNewWordButton()
 		setupGuessButton()
+		setupResetButton()
 	}
 	
 	private func setupNewWordButton() {
@@ -168,9 +244,13 @@ extension HangmanController {
 	}
 	
 	@objc private func generateNewWord() {
-		newWordButton.isEnabled = false
 		viewModel.getRandomWord()
-		viewModel.drawWordLines = { [unowned self] in self.showWordLines() }
+		viewModel.drawWordLines = { [unowned self] in
+			self.showWordLines()
+			self.newWordButton.isEnabled = false
+			self.newWordButton.backgroundColor = .gray
+			self.guessButton.isEnabled = true
+		}
 	}
 	
 	private func setupGuessButton() {
@@ -181,15 +261,47 @@ extension HangmanController {
 		viewModel.textFieldText = textField.text ?? "nil,no text"
 		print("viewModel.textFieldText", viewModel.textFieldText)
 		let indexes = viewModel.check(letter: viewModel.textFieldText)
+		guessesLeftLabel.text = "Guesses Left: \(viewModel.guessesLeft)"
+		incorrectGuessesLabel.text = "Incorrect Guesses: \(viewModel.incorrectGuesses)"
+		correctGuessesLabel.text = "Correct Guesses: \(viewModel.correctGuesses)"
 		textField.text = ""
+		
 		if !indexes.isEmpty {
 			for index in indexes {
 				stackView.arrangedSubviews[index].backgroundColor = .blue
 			}
 		}
-		if viewModel.guessesLeft == 0 || viewModel.userHasWon {
-			reset()
+		
+		if viewModel.userHasWon {
+			statusLabel.text = "You Won!"
+			viewModel.gameOver = true
+			disable()
 		}
+		
+		if !viewModel.userHasWon  && viewModel.guessesLeft == 0 {
+			statusLabel.text = "You Lost!"
+			viewModel.gameOver = true
+			disable()
+		}
+	}
+	
+	private func setupResetButton() {
+		resetGameButton.addTarget(self, action: #selector(resetGame), for: .touchUpInside)
+	}
+	
+	@objc private func resetGame() {
+		textField.isEnabled = true
+		guessButton.isEnabled = true
+		newWordButton.isEnabled = true
+		viewModel.incorrectGuesses = 0
+		viewModel.correctGuesses = 0
+		incorrectGuessesLabel.text = "Incorrect Guesses:"
+		correctGuessesLabel.text = "Correct Guesses:"
+		statusLabel.text = ""
+		viewModel.getRandomWord()
+		clearStackView()
+		resetGameButton.isHidden = true
+		guessesLeftLabel.text = "Guesses Left: \(viewModel.guessesLeft)"
 	}
 }
 // MARK: - localize -
@@ -197,5 +309,19 @@ extension HangmanController {
 	func localize() {
 		guessButton.setTitle("Guess", for: .normal)
 		newWordButton.setTitle("Start", for: .normal)
+		incorrectGuessesLabel.text = "Incorrect Guesses:"
+		guessesLeftLabel.text = "Guesses Left: \(viewModel.guessesLeft)"
+		correctGuessesLabel.text = "Correct Guesses:"
+		statusLabel.text = ""
+		resetGameButton.setTitle("Reset Game", for: .normal)
+	}
+}
+extension HangmanController: UITextFieldDelegate {
+	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+		if let range = string.rangeOfCharacter(from: .letters) {
+			return true
+		} else {
+			return false
+		}
 	}
 }

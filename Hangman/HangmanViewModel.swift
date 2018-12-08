@@ -21,37 +21,39 @@ class HangmanViewModel {
 	var correctGuesses = 0
 	var incorrectGuesses = 0
 	var userHasWon = false
+	var gameOver = false
 	// TODO: - Cache words?
 	// MARK: - functions -
-	func getWords() {
+	func getWords(wordsCompletion: @escaping (_ success: Bool) -> Void) {
 		WordsClient.manager.getWords(success: { [unowned self] in self.words = $0 })
 		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute:  { [unowned self] in
 			print("done getting words")
-			self.wordsIntoArray()
+			self.wordsIntoArray(completion: {
+				print("finished turning into array from view model", $0)
+				wordsCompletion(true)
+			})
 		})
 	}
 	
-	func wordsIntoArray() {
-		print("doneTurningIntoArray",doneTurningIntoArray)
+	func wordsIntoArray(completion: (_ success: Bool) -> Void) {
 		wordsArr = words.split(separator: "\n")
-		doneTurningIntoArray = true
-		print("doneTurningIntoArray",doneTurningIntoArray)
+		completion(true)
 	}
 	
+	//oncompletion
 	func getRandomWord() {
-		if doneTurningIntoArray {
-			let random = Int(arc4random_uniform(162414))
-			print("random#", random)
-			DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute:  { [unowned self] in
-//				self.randomWord = String(self.wordsArr[random])
-				self.randomWord = String(self.wordsArr[85892])
-				self.numberOfAllowedGuesses = self.randomWord.count
-				self.guessesLeft = self.randomWord.count
-				print("random word count ",self.numberOfAllowedGuesses)
-				print("randomWord", self.randomWord)
-				self.wordToDict(word: self.randomWord)
-				self.drawWordLines?()
-			})
+		// TODO: make sure words are done downloading
+		let random = Int(arc4random_uniform(162414))
+		print("random#", random)
+		DispatchQueue.main.async { [unowned self] in
+			//self.randomWord = String(self.wordsArr[random])
+			self.randomWord = String(self.wordsArr[85892])
+			self.numberOfAllowedGuesses = self.randomWord.count
+			self.guessesLeft = self.randomWord.count
+			print("random word count ",self.numberOfAllowedGuesses)
+			print("randomWord", self.randomWord)
+			self.wordToDict(word: self.randomWord)
+			self.drawWordLines?()
 		}
 	}
 	
@@ -74,11 +76,8 @@ class HangmanViewModel {
 	
 	func check(letter: String) -> [Int] {
 		// TODO: Handle wrong guesses
-		print("guesses left:", guessesLeft, "allowed:", numberOfAllowedGuesses)
 		guessesLeft = guessesLeft - 1
-		print("guessed letter, number of guesses left \(guessesLeft)")
 		// TODO: - only allow letter input
-		print("indexes", dict[Character(letter.lowercased())])
 		if let arr = dict[Character(letter.lowercased())] {
 			correctGuesses = correctGuesses + 1
 			if correctGuesses == numberOfAllowedGuesses {

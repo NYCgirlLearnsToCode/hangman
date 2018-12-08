@@ -25,7 +25,7 @@ struct WordsClient {
 				let htmlContent = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
 				
 				regString = String(htmlContent!)
-//				print(regString)
+				print(regString.count)
 				success(regString)
 			}
 		})
