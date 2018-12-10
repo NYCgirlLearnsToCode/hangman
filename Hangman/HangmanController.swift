@@ -173,7 +173,8 @@ extension HangmanController {
 		statusLabel.snp.makeConstraints { make in
 			make.centerX.equalToSuperview()
 			make.top.equalTo(correctGuessesLabel.snp.bottom).offset(10.0)
-			make.width.equalTo(100.0)
+			make.leading.equalTo(correctGuessesLabel)
+			make .trailing.equalTo(imageView.snp.leading).inset(10.0)
 		}
 	}
 	
@@ -296,7 +297,7 @@ extension HangmanController {
 		}
 		
 		if !viewModel.userHasWon  && viewModel.guessesLeft == 0 {
-			statusLabel.text = "You Lost!"
+			statusLabel.text = "You Lost! Word: \(viewModel.randomWord)"
 			viewModel.gameOver = true
 			disable()
 		}
